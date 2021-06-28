@@ -1,4 +1,9 @@
 # # patterns to ignore
 
+# pycache folder, pyc and pyo files
+__pycache__
+*.pyc
+*.pyo
+
 # ignore input folder
 input/
