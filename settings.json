@@ -1,0 +1,5 @@
+{
+    "DATA_PATH": "/Users/michele/github/ashrae/input",
+    "MODEL_PATH": "/Users/michele/github/ashrae/models",
+    "OUTPUT_PATH": "/Users/michele/github/ashrae/output"
+}
