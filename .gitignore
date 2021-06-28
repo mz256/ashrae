@@ -1,4 +1,4 @@
 # # patterns to ignore
 
-# ignore hdf5
-*.h5
+# ignore input folder
+input/
