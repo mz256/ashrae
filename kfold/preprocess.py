@@ -15,6 +15,7 @@ parser = argparse.ArgumentParser(description="")
 parser.add_argument("--add_lag", action="store_true",
                     help="If True add lag features")
 
+
 def load_data(source='train'):
     assert source in ['train', 'test']
     df = pd.read_csv(f'{DATA_PATH}/{source}.csv', parse_dates=['timestamp'])
@@ -61,28 +62,28 @@ def merged_dfs(source='train', fix_timezone=True, impute=True, add_lag=False):
     df = df.merge(load_weather(source=source, fix_timezone=fix_timezone, impute=impute, add_lag=add_lag),
                   on=['site_id', 'timestamp'], how='left')
     if source == 'train':
-        X = df.drop('meter_reading', axis=1)
+        x = df.drop('meter_reading', axis=1)
         y = np.log1p(df.meter_reading)  # log-transform of target
-        return X, y
+        return x, y
     elif source == 'test':
         return df
 
 
 if __name__ == '__main__':
     """
-    python preprocess.py --nolag
     python preprocess.py
+    python preprocess.py --add_lag
     """
 
     args = parser.parse_args()
 
-    add_lag = False
+    lag = False
     if args.add_lag:
-        add_lag = True
+        lag = True
 
     # TRAINING DATASET
     with timer("Loading and processing training data"):
-        X_train, y_train = merged_dfs(add_lag=add_lag)
+        X_train, y_train = merged_dfs(add_lag=lag)
 
         # delete bogus site 0 readings and extract time features
         X_train, y_train = delete_bad_sitezero(X_train, y_train)
@@ -99,15 +100,15 @@ if __name__ == '__main__':
 
         df_train.info()
 
-    # save in HDF5
     with timer("Saving training data"):
+        # save to HDF5 to preserve dtypes
         df_train.to_hdf(f'{DATA_PATH}/preprocessed/lgb_no_lag.h5', index=False, key='train', mode='w')
         del df_train
+        gc.collect()
 
     # TEST DATASET
-
     with timer("Loading and processing test data"):
-        X_test = merged_dfs(source='test', add_lag=add_lag)
+        X_test = merged_dfs(source='test', add_lag=lag)
         X_test = extract_temporal(X_test, train=False)
         X_test.drop(columns=['timestamp'] + to_drop, inplace=True)
         gc.collect()
