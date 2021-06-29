@@ -5,5 +5,6 @@ __pycache__
 *.pyc
 *.pyo
 
-# ignore input folder
+# ignore input and models folders
 input/
+models/
