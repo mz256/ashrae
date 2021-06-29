@@ -2,14 +2,25 @@ import os
 import gc
 import numpy as np
 import pandas as pd
-import datetime
 import json
+import time
+from datetime import datetime
+from contextlib import contextmanager
 
 # load file paths
 settings = json.load(open("/Users/michele/github/ashrae/settings.json"))
 OUTPUT_PATH = settings["OUTPUT_PATH"]
 MODEL_PATH = settings["MODEL_PATH"]
 DATA_PATH = settings["DATA_PATH"]
+
+
+@contextmanager
+def timer(name):
+    print(f'{datetime.now()} - [{name}] ...')
+    t0 = time.time()
+    yield
+    print(f'{datetime.now()} - [{name}] done in {time.time() - t0:.0f} s\n')
+
 
 def reduce_mem(df):
     result = df.copy()

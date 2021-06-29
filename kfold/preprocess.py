@@ -5,9 +5,15 @@ import gc
 import numpy as np
 import pandas as pd
 import datetime
-from utils import *
-#from utils import delete_bad_sitezero, extract_temporal
+import argparse
+from utils import (
+    DATA_PATH, timer, reduce_mem, add_lag_features,
+    delete_bad_sitezero, extract_temporal)
 
+parser = argparse.ArgumentParser(description="")
+
+parser.add_argument("--add_lag", action="store_true",
+                    help="If True add lag features")
 
 def load_data(source='train'):
     assert source in ['train', 'test']
@@ -63,41 +69,50 @@ def merged_dfs(source='train', fix_timezone=True, impute=True, add_lag=False):
 
 
 if __name__ == '__main__':
-    # TO DO: can add here arg with argparser, for lag vs no lag
     """
     python preprocess.py --nolag
     python preprocess.py
     """
 
-    # # TRAINING DATASET
-    X_train, y_train = merged_dfs(add_lag=False)
+    args = parser.parse_args()
 
-    # preprocessing
-    X_train, y_train = delete_bad_sitezero(X_train, y_train)
-    X_train = extract_temporal(X_train)
+    add_lag = False
+    if args.add_lag:
+        add_lag = True
 
-    # remove timestamp and other unimportant features
-    to_drop = ['timestamp', 'sea_level_pressure', 'wind_direction', 'wind_speed']
-    X_train.drop(to_drop, axis=1, inplace=True)
-    gc.collect()
+    # TRAINING DATASET
+    with timer("Loading and processing training data"):
+        X_train, y_train = merged_dfs(add_lag=add_lag)
 
-    df_train = pd.concat([X_train, y_train], axis=1)
-    del X_train, y_train
-    gc.collect()
+        # delete bogus site 0 readings and extract time features
+        X_train, y_train = delete_bad_sitezero(X_train, y_train)
+        X_train = extract_temporal(X_train)
 
-    df_train.info()
+        # remove timestamp and other unimportant features
+        to_drop = ['timestamp', 'sea_level_pressure', 'wind_direction', 'wind_speed']
+        X_train.drop(to_drop, axis=1, inplace=True)
+        gc.collect()
+
+        df_train = pd.concat([X_train, y_train], axis=1)
+        del X_train, y_train
+        gc.collect()
+
+        df_train.info()
 
     # save in HDF5
-    df_train.to_hdf(f'{DATA_PATH}/preprocessed/lgb_no_lag.h5', index=False, key='train', mode='w')
-    del df_train
+    with timer("Saving training data"):
+        df_train.to_hdf(f'{DATA_PATH}/preprocessed/lgb_no_lag.h5', index=False, key='train', mode='w')
+        del df_train
 
-    # # TEST DATASET
+    # TEST DATASET
 
-    X_test = merged_dfs(source='test', add_lag=False)
-    X_test = extract_temporal(X_test, train=False)
-    X_test.drop(columns=['timestamp'] + to_drop, inplace=True)
-    gc.collect()
+    with timer("Loading and processing test data"):
+        X_test = merged_dfs(source='test', add_lag=add_lag)
+        X_test = extract_temporal(X_test, train=False)
+        X_test.drop(columns=['timestamp'] + to_drop, inplace=True)
+        gc.collect()
 
-    X_test.info()
+        X_test.info()
 
-    X_test.to_hdf(f'{DATA_PATH}/preprocessed/lgb_no_lag.h5', index=False, key='test', mode='w')
+    with timer("Saving test data"):
+        X_test.to_hdf(f'{DATA_PATH}/preprocessed/lgb_no_lag.h5', index=False, key='test', mode='w')
