@@ -8,7 +8,7 @@ import datetime
 import argparse
 from utils import (
     DATA_PATH, timer, reduce_mem, add_lag_features,
-    delete_bad_sitezero, extract_temporal)
+    delete_bad_sitezero)
 
 parser = argparse.ArgumentParser(description="")
 
@@ -69,6 +69,16 @@ def merged_dfs(source='train', fix_timezone=True, impute=True, add_lag=False):
         return df
 
 
+def extract_temporal(X, train=True):
+    X['hour'] = X.timestamp.dt.hour
+    X['weekday'] = X.timestamp.dt.weekday
+    if train:
+        # include month to create validation set, to be deleted before training
+        X['month'] = X.timestamp.dt.month
+    # month and year cause overfit, could try other (holiday, business, etc.)
+    return reduce_mem(X)
+
+
 if __name__ == '__main__':
     """
     python preprocess.py
@@ -101,8 +111,13 @@ if __name__ == '__main__':
         df_train.info()
 
     with timer("Saving training data"):
-        # save to HDF5 to preserve dtypes
-        df_train.to_hdf(f'{DATA_PATH}/preprocessed/lgb_no_lag.h5', index=False, key='train', mode='w')
+        if args.add_lag:
+            fname = "nn_with_lag.h5"
+        else:
+            fname = "nn_no_lag.h5"
+
+        # save to HDF5 to preserve dtypes (overwrite previous version)
+        df_train.to_hdf(f'{DATA_PATH}/preprocessed/{fname}', index=False, key='train', mode='w')
         del df_train
         gc.collect()
 
@@ -116,4 +131,5 @@ if __name__ == '__main__':
         X_test.info()
 
     with timer("Saving test data"):
-        X_test.to_hdf(f'{DATA_PATH}/preprocessed/lgb_no_lag.h5', index=False, key='test', mode='w')
+        # now simply append dataset to the same file
+        X_test.to_hdf(f'{DATA_PATH}/preprocessed/{fname}', index=False, key='test', mode='a')

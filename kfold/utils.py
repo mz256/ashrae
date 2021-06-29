@@ -59,15 +59,3 @@ def delete_bad_sitezero(X, y):
     X = X.drop(index=bad_rows)
     y = y.reindex_like(X)
     return X.reset_index(drop=True), y.reset_index(drop=True)
-
-
-def extract_temporal(X, train=True):
-    X['hour'] = X.timestamp.dt.hour
-    X['weekday'] = X.timestamp.dt.weekday
-    if train:
-        # include month to create validation set, to be deleted before training
-        X['month'] = X.timestamp.dt.month
-    # month and year cause overfit, could try other (holiday, business, etc.)
-    return reduce_mem(X)
-
-
