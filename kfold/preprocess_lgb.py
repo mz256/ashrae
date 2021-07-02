@@ -77,8 +77,8 @@ def extract_temporal(X):
 
 if __name__ == '__main__':
     """
-    python preprocess.py
-    python preprocess.py --add_lag
+    python preprocess_lgb.py
+    python preprocess_lgb.py --add_lag
     """
 
     args = parser.parse_args()

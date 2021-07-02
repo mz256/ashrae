@@ -1,4 +1,3 @@
-
 import sys
 import gc
 import psutil
@@ -6,14 +5,14 @@ import warnings
 import numpy as np
 import pandas as pd
 import argparse
-from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import KFold
+from sklearn.metrics import mean_squared_error
 from sklearn.ensemble import RandomForestRegressor
 import lightgbm as lgb
 
 import matplotlib.pyplot as plt
 import seaborn as sns
-from tqdm.notebook import tqdm
+from tqdm import tqdm
 from utils import (
             DATA_PATH, MODEL_PATH, timer
 )
@@ -46,7 +45,7 @@ def lgbm_wrapper(xt, yt, xv, yv, fold=-1):
     if debug:
         num_leaves = 5; boost_rounds = 100; early = 10
     else:
-        num_leaves = 5; boost_rounds = 100; early = 10
+        num_leaves = 500; boost_rounds = 1000; early = 100
 
     params = {
         "objective": "regression",
@@ -104,6 +103,9 @@ def perform_cv(wrapper, n_splits=3):
 
 
 if __name__ == "__main__":
+    """
+    python train.py -- n_splits 3
+    """
 
     args = parser.parse_args()
     debug = args.debug

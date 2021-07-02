@@ -1,10 +1,17 @@
 # # patterns to ignore
 
-# pycache folder, pyc and pyo files
+# unimportant files
 __pycache__
 *.pyc
 *.pyo
+*.DS_Store
 
-# ignore input and models folders
-input/
-models/
+# data files
+*.csv
+*.h5
+
+# models
+*.pickle
+
+# log files
+*.log
