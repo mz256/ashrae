@@ -6,5 +6,10 @@ Collection of files for Kaggle competition by ASHRAE. The objective was stated i
 
 The folder `notebooks` contains some of the kernels used on Kaggle, while the remaining folders contain a version of the pipeline in .py scripts to be run either locally or remotely.
 
+## LGBM
+
 The highest scoring solution consists of an ensemble of k LGBMs trained on different CV folds. All k models share the same set of hyperparameters. This is contained in the `kfold` folder.
 
+## Neural Net
+
+A
