@@ -4,6 +4,7 @@ Collection of files for Kaggle competition by ASHRAE. The objective was stated i
 
 *In this competition, you’ll develop accurate models of metered building energy usage in the following areas: chilled water, electric, hot water, and steam meters. The data comes from over 1,000 buildings over a three-year timeframe. With better estimates of these energy-saving investments, large scale investors and financial institutions will be more inclined to invest in this area to enable progress in building efficiencies.*
 
-The folder `notebooks` contains the kernels used on Kaggle, while the remaining folders contain a version of the pipeline in .py scripts to be run either locally or remotely.
+The folder `notebooks` contains some of the kernels used on Kaggle, while the remaining folders contain a version of the pipeline in .py scripts to be run either locally or remotely.
 
-The solution comprises an ensemble of k-fold LightGBM models. Working on adding a neural net trained with `fastai`.
+The highest scoring solution consists of an ensemble of k LGBMs trained on different CV folds. All k models share the same set of hyperparameters. This is contained in the `kfold` folder.
+
