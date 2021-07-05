@@ -8,8 +8,10 @@ The folder `notebooks` contains some of the kernels used on Kaggle, while the re
 
 ## LGBM
 
-The highest scoring solution consists of an ensemble of k LGBMs trained on different CV folds. All k models share the same set of hyperparameters. This is contained in the `kfold` folder.
+The highest scoring solution consists of an ensemble of k LGBMs trained on different CV folds of the whole (preprocessed) training set. All k models share the same set of hyperparameters. This is contained in the `kfold` folder.
+
+Another solution comprises k LGBMs trained on CV folds for each energy meter, resulting in a total of 4k models. Code in the `notebooks` folder.
 
 ## Neural Net
 
-A
+Another solution involves training a neural network with the fast.ai API. Code in `notebooks`.
