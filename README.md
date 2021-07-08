@@ -12,6 +12,6 @@ The highest scoring solution consists of an ensemble of k LGBMs trained on diffe
 
 Another solution comprises k LGBMs trained on CV folds for each energy meter, resulting in a total of 4k models. Code in the `notebooks` folder.
 
-## Neural Net
+## Neural Net with Categorical Embeddings
 
-Another solution involves training a neural network with the fast.ai API. Code in `notebooks`.
+Another solution involves training a neural network with the fast.ai API. This neural net feeds the categorical features to Embedding layers and concatenates the resulting embedding vectors with the continuous features before feeding to the first linear layer. Code in `notebooks`.
