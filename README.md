@@ -5,8 +5,8 @@ Collection of files for Kaggle competition by ASHRAE. Check [my Kaggle profile](
 *In this competition, you’ll develop accurate models of metered building energy usage in the following areas: chilled water, electric, hot water, and steam meters. The data comes from over 1,000 buildings over a three-year timeframe. With better estimates of these energy-saving investments, large scale investors and financial institutions will be more inclined to invest in this area to enable progress in building efficiencies.*
 
 ## Directory structure
-- `notebooks` contains some of the kernels used on Kaggle.
-- `script_version` contains a version of the pipeline in python scripts, to be run either locally or in the cloud.
+- [notebooks](https://github.com/mz256/ashrae/tree/main/notebooks) contains some of the kernels used on Kaggle.
+- [script_version](https://github.com/mz256/ashrae/tree/main/script_version) contains a version of the pipeline in python scripts, to be run either locally or in the cloud.
 
 Please refer to the README in each folder for an in-depth description.
 
