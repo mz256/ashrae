@@ -1,4 +1,4 @@
-A collection of scripts to run the analysis pipelines more seamlessly.
+A collection of scripts to run the analysis pipelines more seamlessly (work in progress).
 
 ## LightGBM models
 
