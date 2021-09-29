@@ -10,11 +10,13 @@ Collection of files for Kaggle competition by ASHRAE. Check [my Kaggle profile](
 
 Please refer to the README in each folder for an in-depth description.
 
+
 ## Summary of results
 
 - **LightGBM models:**
 
   1. Ensemble of k LightGBM models trained on different CV folds of the (preprocessed) training set. This was the highest scoring solution with a private score of 1.292.
+  
   2. Ensemble of k LightGBM models per meter type, for a total of 4k models.
 
 - **Neural network models:**
