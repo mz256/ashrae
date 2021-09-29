@@ -2,7 +2,7 @@ A collection of scripts to run the analysis pipelines more seamlessly (work in p
 
 ## LightGBM models
 
-[01_kfold_lgbm](https://github.com/mz256/ashrae/tree/main/script_version/01_kfold_lgbm): Preprocessing, feature engineering, training k LightGBM models with cross-validation, inference with simple ensemble. The whole pipeline can be launched by simply running `bash run.sh`.
+[01_single_lgbm](https://github.com/mz256/ashrae/tree/main/script_version/01_kfold_lgbm): Preprocessing, feature engineering, training k LightGBM models with cross-validation, inference with simple ensemble. The whole pipeline can be launched by simply running `bash run.sh`.
 
 ## Deep learning models
 
