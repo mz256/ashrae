@@ -1,4 +1,4 @@
-A collection of scripts to run the analysis pipelines more seamlessly (_work in progress_).
+A collection of scripts to run the analysis pipelines more seamlessly and to move them on the cloud when needed (_work in progress_).
 
 ## LightGBM models
 
