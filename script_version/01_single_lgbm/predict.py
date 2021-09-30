@@ -17,7 +17,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     debug = args.debug
 
-    with open(f'{MODEL_PATH}/lgb_2fold.pickle', mode='rb') as f:
+    with open(f'{MODEL_PATH}/lgb_3fold.pickle', mode='rb') as f:
         [models] = pickle.load(f)
 
     with timer('Loading preprocessed test data'):

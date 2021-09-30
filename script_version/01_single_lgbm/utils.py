@@ -8,7 +8,7 @@ from datetime import datetime
 from contextlib import contextmanager
 
 # load file paths
-settings = json.load(open("/Users/michele/github/ashrae/settings.json"))
+settings = json.load(open("/Users/michele/github/ashrae/script_version/settings.json"))
 OUTPUT_PATH = settings["OUTPUT_PATH"]
 MODEL_PATH = settings["MODEL_PATH"]
 DATA_PATH = settings["DATA_PATH"]

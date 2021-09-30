@@ -11,7 +11,7 @@ __pycache__
 *.h5
 
 # models
-*.pickle
+#*.pickle
 
 # log files
-*.log
+#*.log

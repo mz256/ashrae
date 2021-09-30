@@ -1,0 +1,11 @@
+name: env-ashrae
+dependencies:
+  - numpy
+  - pandas
+  - scikit-learn
+  - seaborn
+  - tqdm
+  - lightgbm
+  - psutil
+  - pytables
+    
